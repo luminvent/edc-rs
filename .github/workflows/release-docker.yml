@@ -5,10 +5,11 @@ on:
     branches: ["main"]
     paths:
       - "testing/**"
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: wolf4ood/connector
+  IMAGE_NAME: dataspace-rs/connector
 
 jobs:
   release-version:
