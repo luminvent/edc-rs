@@ -176,7 +176,9 @@ mod query {
 }
 
 mod terminate {
-    use edc_connector_client::types::contract_negotiation::ContractNegotiationState;
+    use edc_connector_client::{
+        types::contract_negotiation::ContractNegotiationState, Error, ManagementApiError,
+    };
 
     use crate::common::{
         seed_contract_negotiation, setup_consumer_client, setup_provider_client,
@@ -197,17 +199,14 @@ mod terminate {
         )
         .await;
 
-        consumer
+        let result = consumer
             .contract_negotiations()
             .terminate(&contract_negotiation_id, "test")
-            .await
-            .unwrap();
+            .await;
 
-        wait_for_negotiation_state(
-            &consumer,
-            &contract_negotiation_id,
-            ContractNegotiationState::Terminated,
-        )
-        .await;
+        assert!(matches!(
+            result,
+            Err(Error::ManagementApi(ManagementApiError { .. }))
+        ));
     }
 }
