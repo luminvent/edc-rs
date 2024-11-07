@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.edc.data.plane.http)
     implementation(libs.edc.data.plane.iam)
     implementation(libs.edc.auth.tokenbased)
+    implementation(libs.edc.token.core)
 }
 
 application {
