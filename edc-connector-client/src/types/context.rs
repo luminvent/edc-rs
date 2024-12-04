@@ -23,15 +23,15 @@ pub struct WithContextRef<'a, T> {
 }
 
 impl<'a, T> WithContextRef<'a, T> {
-    pub fn new(context: Value, inner: &'a T) -> WithContextRef<T> {
+    pub fn new(context: Value, inner: &'a T) -> WithContextRef<'a, T> {
         WithContextRef { context, inner }
     }
 
-    pub fn default_context(inner: &'a T) -> WithContextRef<T> {
+    pub fn default_context(inner: &'a T) -> WithContextRef<'a, T> {
         WithContextRef::new(json!({ "@vocab": EDC_NAMESPACE }), inner)
     }
 
-    pub fn odrl_context(inner: &'a T) -> WithContextRef<T> {
+    pub fn odrl_context(inner: &'a T) -> WithContextRef<'a, T> {
         WithContextRef::new(json!([ ODRL_CONTEXT,{ "@vocab": EDC_NAMESPACE }]), inner)
     }
 }
