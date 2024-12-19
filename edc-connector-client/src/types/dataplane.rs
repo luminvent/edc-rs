@@ -4,7 +4,7 @@ use serde_with::{formats::PreferMany, serde_as, OneOrMany};
 use super::properties::Properties;
 
 #[serde_as]
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct DataPlaneInstance {
     #[serde(rename = "@id")]
