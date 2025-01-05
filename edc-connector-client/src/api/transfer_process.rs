@@ -23,7 +23,7 @@ impl<'a> TransferProcessApi<'a> {
         &self,
         transfer_request: &TransferRequest,
     ) -> EdcResult<IdResponse<String>> {
-        let url = format!("{}/v3/transferprocesses", self.0.management_url);
+        let url = self.get_endpoint(&[]);
         self.0
             .post::<_, WithContext<IdResponse<String>>>(
                 url,
@@ -34,7 +34,7 @@ impl<'a> TransferProcessApi<'a> {
     }
 
     pub async fn get(&self, id: &str) -> EdcResult<TransferProcess> {
-        let url = format!("{}/v3/transferprocesses/{}", self.0.management_url, id);
+        let url = self.get_endpoint(&[id]);
         self.0
             .get::<WithContext<TransferProcess>>(url)
             .await
@@ -42,7 +42,7 @@ impl<'a> TransferProcessApi<'a> {
     }
 
     pub async fn get_state(&self, id: &str) -> EdcResult<TransferProcessState> {
-        let url = format!("{}/v3/transferprocesses/{}", self.0.management_url, id);
+        let url = self.get_endpoint(&[id]);
         self.0
             .get::<WithContext<TransferState>>(url)
             .await
@@ -50,7 +50,7 @@ impl<'a> TransferProcessApi<'a> {
     }
 
     pub async fn query(&self, query: Query) -> EdcResult<Vec<TransferProcess>> {
-        let url = format!("{}/v3/transferprocesses/request", self.0.management_url);
+        let url = self.get_endpoint(&["request"]);
         self.0
             .post::<_, Vec<WithContext<TransferProcess>>>(
                 url,
@@ -61,10 +61,7 @@ impl<'a> TransferProcessApi<'a> {
     }
 
     pub async fn terminate(&self, id: &str, reason: &str) -> EdcResult<()> {
-        let url = format!(
-            "{}/v3/transferprocesses/{}/terminate",
-            self.0.management_url, id
-        );
+        let url = self.get_endpoint(&[id, "terminate"]);
 
         let request = TerminateTransfer {
             id: id.to_string(),
@@ -77,10 +74,7 @@ impl<'a> TransferProcessApi<'a> {
     }
 
     pub async fn suspend(&self, id: &str, reason: &str) -> EdcResult<()> {
-        let url = format!(
-            "{}/v3/transferprocesses/{}/suspend",
-            self.0.management_url, id
-        );
+        let url = self.get_endpoint(&[id, "suspend"]);
 
         let request = SuspendTransfer {
             id: id.to_string(),
@@ -93,14 +87,18 @@ impl<'a> TransferProcessApi<'a> {
     }
 
     pub async fn resume(&self, id: &str) -> EdcResult<()> {
-        let url = format!(
-            "{}/v3/transferprocesses/{}/resume",
-            self.0.management_url, id
-        );
-
+        let url = self.get_endpoint(&[id, "resume"]);
         self.0
             .post_no_response(url, &Option::<()>::None)
             .await
             .map(|_| ())
+    }
+
+    fn get_endpoint(&self, paths: &[&str]) -> String {
+        [self.0.management_url.as_str(), "v3", "transferprocesses"]
+            .into_iter()
+            .chain(paths.iter().copied())
+            .collect::<Vec<_>>()
+            .join("/")
     }
 }
