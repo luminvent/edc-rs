@@ -42,7 +42,7 @@ mod initiate {
             .policy(
                 Policy::builder()
                     .kind(PolicyKind::Offer)
-                    .id(&offer_id)
+                    .id(offer_id)
                     .assigner(PROVIDER_ID)
                     .target(Target::id(&asset_id))
                     .build(),
@@ -85,7 +85,7 @@ mod initiate {
             .counter_party_id(PROVIDER_ID)
             .policy(
                 Policy::builder()
-                    .id(&offer_id)
+                    .id(offer_id)
                     .assigner(PROVIDER_ID)
                     .target(Target::id(&asset_id))
                     .build(),
