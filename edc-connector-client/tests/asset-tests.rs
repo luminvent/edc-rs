@@ -289,7 +289,7 @@ mod query {
         assert_eq!(
             "bar",
             assets
-                .get(0)
+                .first()
                 .unwrap()
                 .property::<String>("foo")
                 .unwrap()
@@ -333,7 +333,7 @@ mod query {
 
         assert_eq!(
             Ok(Some("baz".to_string())),
-            assets.get(0).unwrap().property::<String>("foo")
+            assets.first().unwrap().property::<String>("foo")
         )
     }
 
@@ -374,7 +374,7 @@ mod query {
 
         assert_eq!(
             Ok(Some("bar".to_string())),
-            assets.get(0).unwrap().property::<String>("foo")
+            assets.first().unwrap().property::<String>("foo")
         );
 
         let query = Query::builder()
@@ -390,7 +390,7 @@ mod query {
 
         assert_eq!(
             Ok(Some("baz".to_string())),
-            assets.get(0).unwrap().property::<String>("foo")
+            assets.first().unwrap().property::<String>("foo")
         )
     }
 }

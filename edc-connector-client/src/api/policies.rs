@@ -20,7 +20,7 @@ impl<'a> PolicyApi<'a> {
         &self,
         policy_definition: &NewPolicyDefinition,
     ) -> EdcResult<IdResponse<String>> {
-        let url = format!("{}/v3/policydefinitions", self.0.management_url);
+        let url = self.get_endpoint(&[]);
         self.0
             .post::<_, WithContext<IdResponse<String>>>(
                 url,
@@ -31,7 +31,7 @@ impl<'a> PolicyApi<'a> {
     }
 
     pub async fn get(&self, id: &str) -> EdcResult<PolicyDefinition> {
-        let url = format!("{}/v3/policydefinitions/{}", self.0.management_url, id);
+        let url = self.get_endpoint(&[id]);
         self.0
             .get::<WithContext<PolicyDefinition>>(url)
             .await
@@ -39,18 +39,14 @@ impl<'a> PolicyApi<'a> {
     }
 
     pub async fn update(&self, policy_definition: &PolicyDefinition) -> EdcResult<()> {
-        let url = format!(
-            "{}/v2/policydefinitions/{}",
-            self.0.management_url,
-            policy_definition.id()
-        );
+        let url = self.get_endpoint(&[policy_definition.id()]);
         self.0
             .put(url, &WithContextRef::odrl_context(policy_definition))
             .await
     }
 
     pub async fn query(&self, query: Query) -> EdcResult<Vec<PolicyDefinition>> {
-        let url = format!("{}/v3/policydefinitions/request", self.0.management_url);
+        let url = self.get_endpoint(&["request"]);
         self.0
             .post::<_, Vec<WithContext<PolicyDefinition>>>(
                 url,
@@ -61,7 +57,15 @@ impl<'a> PolicyApi<'a> {
     }
 
     pub async fn delete(&self, id: &str) -> EdcResult<()> {
-        let url = format!("{}/v3/policydefinitions/{}", self.0.management_url, id);
+        let url = self.get_endpoint(&[id]);
         self.0.del(url).await
+    }
+
+    fn get_endpoint(&self, paths: &[&str]) -> String {
+        [self.0.management_url.as_str(), "v3", "policydefinitions"]
+            .into_iter()
+            .chain(paths.iter().copied())
+            .collect::<Vec<_>>()
+            .join("/")
     }
 }

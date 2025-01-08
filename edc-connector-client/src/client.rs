@@ -5,10 +5,8 @@ use serde::{de::DeserializeOwned, Serialize};
 
 use crate::{
     api::{
-        assets::AssetApi, catalog::CatalogApi, contract_agreement::ContractAgreementApi,
-        contract_definitions::ContractDefinitionApi, contract_negotiations::ContractNegotiationApi,
-        dataplanes::DataPlaneApi, edrs::EdrApi, policies::PolicyApi,
-        transfer_process::TransferProcessApi,
+        AssetApi, CatalogApi, ContractAgreementApi, ContractDefinitionApi, ContractNegotiationApi,
+        DataPlaneApi, EdrApi, PolicyApi, TransferProcessApi,
     },
     error::{
         BuilderError, ManagementApiError, ManagementApiErrorDetail, ManagementApiErrorDetailKind,

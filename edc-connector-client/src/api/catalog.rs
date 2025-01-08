@@ -15,7 +15,7 @@ impl<'a> CatalogApi<'a> {
     }
 
     pub async fn request(&self, request: &CatalogRequest) -> EdcResult<Catalog> {
-        let url = format!("{}/v3/catalog/request", self.0.management_url);
+        let url = self.get_endpoint(&["request"]);
         self.0
             .post::<_, WithContext<Catalog>>(url, &WithContextRef::default_context(request))
             .await
@@ -23,10 +23,18 @@ impl<'a> CatalogApi<'a> {
     }
 
     pub async fn dataset(&self, request: &DatasetRequest) -> EdcResult<Dataset> {
-        let url = format!("{}/v3/catalog/dataset/request", self.0.management_url);
+        let url = self.get_endpoint(&["dataset", "request"]);
         self.0
             .post::<_, WithContext<Dataset>>(url, &WithContextRef::default_context(request))
             .await
             .map(|ctx| ctx.inner)
+    }
+
+    fn get_endpoint(&self, paths: &[&str]) -> String {
+        [self.0.management_url.as_str(), "v3", "catalog"]
+            .into_iter()
+            .chain(paths.iter().copied())
+            .collect::<Vec<_>>()
+            .join("/")
     }
 }

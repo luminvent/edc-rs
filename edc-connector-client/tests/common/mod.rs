@@ -88,7 +88,7 @@ pub async fn seed_contract_negotiation(
     consumer: &EdcConnectorClient,
     provider: &EdcConnectorClient,
 ) -> (String, String) {
-    let (asset_id, _, _) = seed(&provider).await;
+    let (asset_id, _, _) = seed(provider).await;
 
     let dataset_request = DatasetRequest::builder()
         .counter_party_address(PROVIDER_PROTOCOL)
@@ -109,7 +109,7 @@ pub async fn seed_contract_negotiation(
         .counter_party_id(PROVIDER_ID)
         .policy(
             Policy::builder()
-                .id(&offer_id)
+                .id(offer_id)
                 .kind(PolicyKind::Offer)
                 .assigner(PROVIDER_ID)
                 .target(Target::id(&asset_id))
@@ -134,7 +134,7 @@ pub async fn seed_contract_agreement(
     let (contract_negotiation_id, asset_id) = seed_contract_negotiation(consumer, provider).await;
 
     wait_for_negotiation_state(
-        &consumer,
+        consumer,
         &contract_negotiation_id,
         ContractNegotiationState::Finalized,
     )
@@ -168,7 +168,7 @@ pub async fn seed_transfer_process(
     let (contract_negotiation_id, asset_id) = seed_contract_negotiation(consumer, provider).await;
 
     wait_for_negotiation_state(
-        &consumer,
+        consumer,
         &contract_negotiation_id,
         ContractNegotiationState::Finalized,
     )

@@ -219,7 +219,7 @@ mod terminate {
 
         wait_for_transfer_state(&consumer, response.id(), TransferProcessState::Started).await;
 
-        let _ = consumer
+        consumer
             .transfer_processes()
             .terminate(response.id(), "reason")
             .await
@@ -266,7 +266,7 @@ mod suspend {
 
         wait_for_transfer_state(&consumer, response.id(), TransferProcessState::Started).await;
 
-        let _ = consumer
+        consumer
             .transfer_processes()
             .suspend(response.id(), "reason")
             .await
@@ -274,7 +274,7 @@ mod suspend {
 
         wait_for_transfer_state(&consumer, response.id(), TransferProcessState::Suspended).await;
 
-        let _ = consumer
+        consumer
             .transfer_processes()
             .resume(response.id())
             .await

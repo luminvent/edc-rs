@@ -17,7 +17,7 @@ impl<'a> AssetApi<'a> {
     }
 
     pub async fn create(&self, asset: &NewAsset) -> EdcResult<IdResponse<String>> {
-        let url = format!("{}/v3/assets", self.0.management_url);
+        let url = self.get_endpoint(&[]);
         self.0
             .post::<_, WithContext<IdResponse<String>>>(
                 url,
@@ -28,7 +28,7 @@ impl<'a> AssetApi<'a> {
     }
 
     pub async fn get(&self, id: &str) -> EdcResult<Asset> {
-        let url = format!("{}/v3/assets/{}", self.0.management_url, id);
+        let url = self.get_endpoint(&[id]);
         self.0
             .get::<WithContext<Asset>>(url)
             .await
@@ -36,14 +36,14 @@ impl<'a> AssetApi<'a> {
     }
 
     pub async fn update(&self, asset: &Asset) -> EdcResult<()> {
-        let url = format!("{}/v3/assets", self.0.management_url);
+        let url = self.get_endpoint(&[]);
         self.0
             .put(url, &WithContextRef::default_context(asset))
             .await
     }
 
     pub async fn query(&self, query: Query) -> EdcResult<Vec<Asset>> {
-        let url = format!("{}/v3/assets/request", self.0.management_url);
+        let url = self.get_endpoint(&["request"]);
         self.0
             .post::<_, Vec<WithContext<Asset>>>(url, &WithContextRef::default_context(&query))
             .await
@@ -51,7 +51,15 @@ impl<'a> AssetApi<'a> {
     }
 
     pub async fn delete(&self, id: &str) -> EdcResult<()> {
-        let url = format!("{}/v3/assets/{}", self.0.management_url, id);
+        let url = self.get_endpoint(&[id]);
         self.0.del(url).await
+    }
+
+    fn get_endpoint(&self, paths: &[&str]) -> String {
+        [self.0.management_url.as_str(), "v3", "assets"]
+            .into_iter()
+            .chain(paths.iter().copied())
+            .collect::<Vec<_>>()
+            .join("/")
     }
 }
