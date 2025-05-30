@@ -13,7 +13,7 @@ pub use self::conversion::{FromValue, ToValue};
 pub struct Properties(HashMap<String, PropertyValue>);
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
-pub struct PropertyValue(pub(crate) Value);
+pub struct PropertyValue(pub Value);
 
 impl Properties {
     pub fn get<T>(&self, property: &str) -> Result<Option<T>, ConversionError>

@@ -407,11 +407,11 @@ impl LeftOperand {
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 pub struct AtomicConstraint {
     #[serde(rename = "leftOperand", alias = "odrl:leftOperand")]
-    left_operand: LeftOperand,
+    pub left_operand: LeftOperand,
     #[serde(alias = "odrl:operator")]
-    operator: Operator,
+    pub operator: Operator,
     #[serde(rename = "rightOperand", alias = "odrl:rightOperand")]
-    right_operand: PropertyValue,
+    pub right_operand: PropertyValue,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
