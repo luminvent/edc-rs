@@ -19,6 +19,7 @@ pub struct ContractRequest {
     #[builder(default)]
     protocol: Protocol,
     #[builder(into)]
+    #[serde(skip_serializing_if = "Option::is_none")]
     counter_party_id: Option<String>,
     #[builder(into)]
     counter_party_address: String,
