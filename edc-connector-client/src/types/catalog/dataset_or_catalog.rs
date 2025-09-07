@@ -26,6 +26,10 @@ pub struct DatasetOrCatalog {
     #[serde(rename = "service", alias = "dcat:service", default)]
     #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
     services: Vec<Service>,
+    
+    #[serde(rename = "dcterms_type", alias = "dct:type", default)]
+    #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
+    dcterms_types: Vec<String>,
 
     #[serde(flatten)]
     common_properties: CommonProperties,
@@ -38,6 +42,10 @@ impl DatasetOrCatalog {
 
     pub fn types(&self) -> &Vec<String> {
         &self.types
+    }
+    
+    pub fn dcterms_types(&self) -> &Vec<String> {
+        &self.dcterms_types
     }
 
     pub fn is_catalog(&self) -> bool {
@@ -65,6 +73,7 @@ impl DatasetOrCatalog {
             vec![Dataset::new(
                 self.id.clone(),
                 self.types.clone(),
+                self.dcterms_types.clone(),
                 self.offers.clone(),
                 self.common_properties().clone(),
             )]
@@ -93,6 +102,7 @@ impl DatasetOrCatalog {
             vec![DatasetOrService::Dataset(Dataset::new(
                 self.id.clone(),
                 self.types.clone(),
+                self.dcterms_types.clone(),
                 self.offers.clone(),
                 self.common_properties.clone(),
             ))]

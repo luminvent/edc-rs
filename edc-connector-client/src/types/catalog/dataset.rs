@@ -6,6 +6,7 @@ use serde::Deserialize;
 pub struct Dataset {
     id: String,
     types: Vec<String>,
+    dcterms_types: Vec<String>,
     policies: Vec<Policy>,
     common_properties: CommonProperties,
 }
@@ -14,12 +15,14 @@ impl Dataset {
     pub fn new(
         id: String,
         types: Vec<String>,
+        dcterms_types: Vec<String>,
         policies: Vec<Policy>,
         common_properties: CommonProperties,
     ) -> Self {
         Self {
             id,
             types,
+            dcterms_types,
             policies,
             common_properties,
         }
@@ -31,6 +34,10 @@ impl Dataset {
 
     pub fn types(&self) -> &Vec<String> {
         &self.types
+    }
+
+    pub fn dcterms_types(&self) -> &Vec<String> {
+        &self.dcterms_types
     }
 
     pub fn policies(&self) -> &Vec<Policy> {
