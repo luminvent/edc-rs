@@ -19,7 +19,7 @@ pub struct ContractRequest {
     #[builder(default)]
     protocol: Protocol,
     #[builder(into)]
-    counter_party_id: String,
+    counter_party_id: Option<String>,
     #[builder(into)]
     counter_party_address: String,
     policy: Policy,
@@ -42,7 +42,7 @@ pub struct ContractNegotiation {
     private_properties: Properties,
     state: ContractNegotiationState,
     contract_agreement_id: Option<String>,
-    counter_party_id: String,
+    counter_party_id: Option<String>,
     counter_party_address: String,
     protocol: String,
     created_at: i64,
@@ -125,7 +125,7 @@ impl ContractNegotiation {
         self.contract_agreement_id.as_ref()
     }
 
-    pub fn counter_party_id(&self) -> &str {
+    pub fn counter_party_id(&self) -> &Option<String> {
         &self.counter_party_id
     }
 
