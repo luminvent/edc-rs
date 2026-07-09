@@ -1,4 +1,4 @@
-use edc_connector_client::{Auth, EdcConnectorApiVersion, EdcConnectorClient};
+use edc_connector_client_next::{Auth, EdcConnectorApiVersion, EdcConnectorClient};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

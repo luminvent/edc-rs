@@ -3,7 +3,7 @@ mod common;
 mod transfer_processes {
 
     mod initiate {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::{
                 data_address::DataAddress,
                 transfer_process::{TransferProcessState, TransferRequest},
@@ -95,12 +95,12 @@ mod transfer_processes {
             ClientParams,
         };
         use crate::common::{seed_contract_agreement, setup_client};
-        use edc_connector_client::types::{
+        use edc_connector_client_next::types::{
             callback_address::CallbackAddress,
             data_address::DataAddress,
             transfer_process::{TransferProcessKind, TransferProcessState, TransferRequest},
         };
-        use edc_connector_client::EdcConnectorApiVersion;
+        use edc_connector_client_next::EdcConnectorApiVersion;
         use rstest::rstest;
 
         #[rstest]
@@ -172,12 +172,12 @@ mod transfer_processes {
             consumer, consumer_virtual_edc, provider, provider_2025, seed_contract_agreement,
             setup_client, wait_for_transfer_state, ClientParams,
         };
-        use edc_connector_client::types::{
+        use edc_connector_client_next::types::{
             data_address::DataAddress,
             query::Query,
             transfer_process::{TransferProcessState, TransferRequest},
         };
-        use edc_connector_client::EdcConnectorApiVersion;
+        use edc_connector_client_next::EdcConnectorApiVersion;
         use rstest::rstest;
 
         #[rstest]
@@ -229,11 +229,11 @@ mod transfer_processes {
             consumer, consumer_virtual_edc, provider, provider_2025, seed_contract_agreement,
             setup_client, wait_for_transfer_state, ClientParams,
         };
-        use edc_connector_client::types::{
+        use edc_connector_client_next::types::{
             data_address::DataAddress,
             transfer_process::{TransferProcessState, TransferRequest},
         };
-        use edc_connector_client::EdcConnectorApiVersion;
+        use edc_connector_client_next::EdcConnectorApiVersion;
         use rstest::rstest;
 
         #[rstest]
@@ -286,11 +286,11 @@ mod transfer_processes {
             consumer, provider, seed_contract_agreement, setup_client, wait_for_transfer_state,
             ClientParams,
         };
-        use edc_connector_client::types::{
+        use edc_connector_client_next::types::{
             data_address::DataAddress,
             transfer_process::{TransferProcessState, TransferRequest},
         };
-        use edc_connector_client::EdcConnectorApiVersion;
+        use edc_connector_client_next::EdcConnectorApiVersion;
         use rstest::rstest;
 
         #[rstest]

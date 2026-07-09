@@ -3,7 +3,7 @@ mod common;
 mod catalog {
 
     mod local_catalog {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::{catalog::CatalogRequest, query::Query},
             EdcConnectorApiVersion, EDC_NAMESPACE,
         };
@@ -65,8 +65,8 @@ mod catalog {
             consumer, consumer_virtual_edc, provider, provider_virtual_edc, seed, setup_client,
             CatalogExtraFields, ClientParams,
         };
-        use edc_connector_client::types::catalog::DatasetRequest;
-        use edc_connector_client::EdcConnectorApiVersion;
+        use edc_connector_client_next::types::catalog::DatasetRequest;
+        use edc_connector_client_next::EdcConnectorApiVersion;
         use rstest::rstest;
 
         #[rstest]

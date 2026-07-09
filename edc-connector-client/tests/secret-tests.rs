@@ -3,7 +3,7 @@ mod common;
 mod secrets {
 
     mod create {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::secret::NewSecret, EdcConnectorApiVersion, Error, ManagementApiError,
             ManagementApiErrorDetailKind,
         };
@@ -65,7 +65,7 @@ mod secrets {
     }
 
     mod delete {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::secret::NewSecret, EdcConnectorApiVersion, Error, ManagementApiError,
             ManagementApiErrorDetailKind,
         };
@@ -119,7 +119,7 @@ mod secrets {
     }
 
     mod get {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::secret::NewSecret, EdcConnectorApiVersion, Error, ManagementApiError,
             ManagementApiErrorDetailKind,
         };
@@ -172,7 +172,7 @@ mod secrets {
     }
 
     mod update {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::secret::{NewSecret, Secret},
             EdcConnectorApiVersion, Error, ManagementApiError, ManagementApiErrorDetailKind,
         };

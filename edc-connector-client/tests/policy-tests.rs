@@ -1,6 +1,6 @@
 mod common;
 mod create {
-    use edc_connector_client::{
+    use edc_connector_client_next::{
         types::policy::{NewPolicyDefinition, Policy},
         EdcConnectorApiVersion, Error, ManagementApiError, ManagementApiErrorDetailKind,
     };
@@ -77,7 +77,7 @@ mod create {
 }
 
 mod delete {
-    use edc_connector_client::{
+    use edc_connector_client_next::{
         types::policy::{NewPolicyDefinition, Policy},
         EdcConnectorApiVersion, Error, ManagementApiError, ManagementApiErrorDetailKind,
     };
@@ -139,7 +139,7 @@ mod delete {
 }
 
 mod get {
-    use edc_connector_client::{
+    use edc_connector_client_next::{
         types::policy::{
             Action, AtomicConstraint, Constraint, LeftOperand, NewPolicyDefinition, Operator,
             Permission, Policy, PolicyKind,
@@ -252,7 +252,7 @@ mod get {
 }
 
 mod update {
-    use edc_connector_client::{
+    use edc_connector_client_next::{
         types::policy::{Action, NewPolicyDefinition, Permission, Policy, PolicyDefinition},
         EdcConnectorApiVersion, Error, ManagementApiError, ManagementApiErrorDetailKind,
     };
@@ -339,11 +339,11 @@ mod update {
 
 mod query {
     use crate::common::{provider, provider_virtual_edc, setup_client, ClientParams};
-    use edc_connector_client::types::{
+    use edc_connector_client_next::types::{
         policy::{NewPolicyDefinition, Policy},
         query::Query,
     };
-    use edc_connector_client::EdcConnectorApiVersion;
+    use edc_connector_client_next::EdcConnectorApiVersion;
     use rstest::rstest;
     use uuid::Uuid;
 

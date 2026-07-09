@@ -2,7 +2,7 @@ mod common;
 
 mod contract_definition {
     mod create {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::contract_definition::NewContractDefinition, EdcConnectorApiVersion, Error,
             ManagementApiError, ManagementApiErrorDetailKind,
         };
@@ -85,7 +85,7 @@ mod contract_definition {
     }
 
     mod delete {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::contract_definition::NewContractDefinition, EdcConnectorApiVersion, Error,
             ManagementApiError, ManagementApiErrorDetailKind,
         };
@@ -152,7 +152,7 @@ mod contract_definition {
     }
 
     mod get {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::contract_definition::NewContractDefinition, EdcConnectorApiVersion, Error,
             ManagementApiError, ManagementApiErrorDetailKind,
         };
@@ -221,7 +221,7 @@ mod contract_definition {
     }
 
     mod update {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::contract_definition::{ContractDefinition, NewContractDefinition},
             EdcConnectorApiVersion, Error, ManagementApiError, ManagementApiErrorDetailKind,
         };
@@ -306,10 +306,10 @@ mod contract_definition {
 
     mod query {
         use crate::common::{provider, provider_virtual_edc, setup_client, ClientParams};
-        use edc_connector_client::types::{
+        use edc_connector_client_next::types::{
             contract_definition::NewContractDefinition, query::Query,
         };
-        use edc_connector_client::EdcConnectorApiVersion;
+        use edc_connector_client_next::EdcConnectorApiVersion;
         use rstest::rstest;
         use uuid::Uuid;
 

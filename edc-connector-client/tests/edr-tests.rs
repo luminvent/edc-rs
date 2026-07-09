@@ -3,8 +3,8 @@ mod common;
 mod get {
     use crate::common::{consumer, provider, setup_client, wait_for_transfer_state, ClientParams};
     use crate::common::{seed_transfer_process, wait_for};
-    use edc_connector_client::types::transfer_process::TransferProcessState;
-    use edc_connector_client::EdcConnectorApiVersion;
+    use edc_connector_client_next::types::transfer_process::TransferProcessState;
+    use edc_connector_client_next::EdcConnectorApiVersion;
     use rstest::rstest;
 
     #[rstest]
@@ -43,9 +43,9 @@ mod get {
 mod query {
     use crate::common::{consumer, provider, setup_client, wait_for_transfer_state, ClientParams};
     use crate::common::{seed_transfer_process, wait_for};
-    use edc_connector_client::types::query::Query;
-    use edc_connector_client::types::transfer_process::TransferProcessState;
-    use edc_connector_client::EdcConnectorApiVersion;
+    use edc_connector_client_next::types::query::Query;
+    use edc_connector_client_next::types::transfer_process::TransferProcessState;
+    use edc_connector_client_next::EdcConnectorApiVersion;
     use rstest::rstest;
 
     #[rstest]
@@ -89,8 +89,8 @@ mod query {
 }
 
 mod delete {
-    use edc_connector_client::types::transfer_process::TransferProcessState;
-    use edc_connector_client::{
+    use edc_connector_client_next::types::transfer_process::TransferProcessState;
+    use edc_connector_client_next::{
         EdcConnectorApiVersion, Error, ManagementApiError, ManagementApiErrorDetailKind,
     };
     use reqwest::StatusCode;

@@ -2,7 +2,7 @@ mod common;
 
 mod dataplane {
     use crate::common::{provider, setup_client, ClientParams};
-    use edc_connector_client::EdcConnectorApiVersion;
+    use edc_connector_client_next::EdcConnectorApiVersion;
     use rstest::rstest;
 
     #[rstest]

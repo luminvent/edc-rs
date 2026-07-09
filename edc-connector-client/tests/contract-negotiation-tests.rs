@@ -3,7 +3,7 @@ mod common;
 mod contract_negotiations {
 
     mod initiate {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::{
                 catalog::DatasetRequest,
                 contract_negotiation::ContractRequest,
@@ -150,10 +150,10 @@ mod contract_negotiations {
             consumer, consumer_virtual_edc, provider, provider_virtual_edc,
             seed_contract_negotiation, setup_client, ClientParams,
         };
-        use edc_connector_client::types::contract_negotiation::{
+        use edc_connector_client_next::types::contract_negotiation::{
             ContractNegotiationKind, ContractNegotiationState,
         };
-        use edc_connector_client::EdcConnectorApiVersion;
+        use edc_connector_client_next::EdcConnectorApiVersion;
         use rstest::rstest;
 
         #[rstest]
@@ -223,8 +223,8 @@ mod contract_negotiations {
             consumer, consumer_virtual_edc, provider, provider_virtual_edc,
             seed_contract_negotiation, setup_client, ClientParams,
         };
-        use edc_connector_client::types::query::Query;
-        use edc_connector_client::EdcConnectorApiVersion;
+        use edc_connector_client_next::types::query::Query;
+        use edc_connector_client_next::EdcConnectorApiVersion;
         use rstest::rstest;
 
         #[rstest]
@@ -262,7 +262,7 @@ mod contract_negotiations {
     }
 
     mod terminate {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::contract_negotiation::ContractNegotiationState, EdcConnectorApiVersion, Error,
             ManagementApiError,
         };

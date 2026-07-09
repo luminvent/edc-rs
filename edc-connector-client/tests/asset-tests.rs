@@ -4,7 +4,7 @@ mod common;
 mod assets {
 
     mod create {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::{asset::NewAsset, data_address::DataAddress},
             EdcConnectorApiVersion, Error, ManagementApiError, ManagementApiErrorDetailKind,
         };
@@ -76,7 +76,7 @@ mod assets {
     }
 
     mod delete {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::{asset::NewAsset, data_address::DataAddress},
             EdcConnectorApiVersion, Error, ManagementApiError, ManagementApiErrorDetailKind,
         };
@@ -135,7 +135,7 @@ mod assets {
     }
 
     mod get {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::{asset::NewAsset, data_address::DataAddress},
             ConversionError, EdcConnectorApiVersion, Error, ManagementApiError,
             ManagementApiErrorDetailKind,
@@ -236,7 +236,7 @@ mod assets {
     }
 
     mod update {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::{
                 asset::{Asset, NewAsset},
                 data_address::DataAddress,
@@ -312,7 +312,7 @@ mod assets {
     }
 
     mod query {
-        use edc_connector_client::{
+        use edc_connector_client_next::{
             types::{
                 asset::NewAsset,
                 data_address::DataAddress,

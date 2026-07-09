@@ -12,7 +12,7 @@
 //!
 //! ```rust,no_run
 //!
-//! use edc_connector_client::{EdcConnectorClient, EdcConnectorApiVersion, Auth};
+//! use edc_connector_client_next::{EdcConnectorClient, EdcConnectorApiVersion, Auth};
 //!
 //!
 //! #[tokio::main]

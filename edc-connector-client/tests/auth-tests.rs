@@ -1,8 +1,8 @@
 mod common;
 
 mod auth {
-    use edc_connector_client::types::{asset::NewAsset, data_address::DataAddress};
-    use edc_connector_client::{
+    use edc_connector_client_next::types::{asset::NewAsset, data_address::DataAddress};
+    use edc_connector_client_next::{
         EdcConnectorApiVersion, Error, ManagementApiError, ManagementApiErrorDetailKind,
     };
     use reqwest::StatusCode;
@@ -12,7 +12,7 @@ mod auth {
 
     #[tokio::test]
     async fn should_fail_to_create_an_asset() {
-        let client = setup_provider_client_with_auth(edc_connector_client::Auth::NoAuth);
+        let client = setup_provider_client_with_auth(edc_connector_client_next::Auth::NoAuth);
 
         let id = Uuid::new_v4().to_string();
 

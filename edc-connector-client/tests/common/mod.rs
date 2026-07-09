@@ -3,8 +3,7 @@
 use std::{collections::HashMap, future::Future, thread, time::Duration};
 
 use bon::Builder;
-use edc_connector_client::types::ExtraTokenFields;
-use edc_connector_client::{
+use edc_connector_client_next::{
     types::{
         asset::NewAsset,
         catalog::DatasetRequest,
@@ -15,7 +14,7 @@ use edc_connector_client::{
         policy::{Action, NewPolicyDefinition, Permission, Policy, PolicyKind, Target},
         query::Criterion,
         transfer_process::{TransferProcessState, TransferRequest},
-        Protocol,
+        ExtraTokenFields, Protocol,
     },
     Auth, EdcConnectorApiVersion, EdcConnectorClient, OAuth2Config, EDC_NAMESPACE,
 };

@@ -7,8 +7,8 @@ mod contract_agreements {
             consumer, consumer_virtual_edc, provider, provider_virtual_edc,
             seed_contract_negotiation, setup_client, wait_for_negotiation_state, ClientParams,
         };
-        use edc_connector_client::types::contract_negotiation::ContractNegotiationState;
-        use edc_connector_client::EdcConnectorApiVersion;
+        use edc_connector_client_next::types::contract_negotiation::ContractNegotiationState;
+        use edc_connector_client_next::EdcConnectorApiVersion;
         use rstest::rstest;
 
         #[rstest]
@@ -61,10 +61,10 @@ mod contract_agreements {
             consumer, consumer_virtual_edc, provider, provider_virtual_edc,
             seed_contract_negotiation, setup_client, wait_for_negotiation_state, ClientParams,
         };
-        use edc_connector_client::types::{
+        use edc_connector_client_next::types::{
             contract_negotiation::ContractNegotiationState, query::Query,
         };
-        use edc_connector_client::EdcConnectorApiVersion;
+        use edc_connector_client_next::EdcConnectorApiVersion;
         use rstest::rstest;
 
         #[rstest]
