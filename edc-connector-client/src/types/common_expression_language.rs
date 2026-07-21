@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "camelCase")]
 pub struct CommonExpressionLanguage {
     #[builder(field)]
+    #[serde(default = "Default::default")]
     properties: Properties,
     #[builder(field)]
     #[serde(default = "Default::default")]
@@ -27,6 +28,7 @@ pub struct CommonExpressionLanguage {
 #[serde(rename_all = "camelCase")]
 pub struct NewCommonExpressionLanguage {
     #[builder(field)]
+    #[serde(default = "Default::default")]
     properties: Properties,
     #[builder(field)]
     #[serde(default = "Default::default")]
