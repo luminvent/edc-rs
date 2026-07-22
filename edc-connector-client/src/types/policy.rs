@@ -86,6 +86,7 @@ pub struct Policy {
         alias = "http://www.w3.org/ns/odrl/2/permission",
         default
     )]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     permissions: Vec<Permission>,
     #[builder(field)]
     #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
@@ -95,6 +96,7 @@ pub struct Policy {
         alias = "http://www.w3.org/ns/odrl/2/obligation",
         default
     )]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     obligations: Vec<Obligation>,
     #[builder(field)]
     #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
@@ -104,6 +106,7 @@ pub struct Policy {
         alias = "http://www.w3.org/ns/odrl/2/prohibition",
         default
     )]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     prohibitions: Vec<Prohibition>,
     #[builder(into)]
     #[serde(rename = "@id")]
