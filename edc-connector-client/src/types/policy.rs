@@ -80,18 +80,30 @@ impl<S: new_policy_definition_builder::State> NewPolicyDefinitionBuilder<S> {
 pub struct Policy {
     #[builder(field)]
     #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
-    #[serde(rename = "permission", alias = "odrl:permission", default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(
+        rename = "permission",
+        alias = "odrl:permission",
+        alias = "http://www.w3.org/ns/odrl/2/permission",
+        default
+    )]
     permissions: Vec<Permission>,
     #[builder(field)]
     #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
-    #[serde(rename = "obligation", alias = "odrl:obligation", default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(
+        rename = "obligation",
+        alias = "odrl:obligation",
+        alias = "http://www.w3.org/ns/odrl/2/obligation",
+        default
+    )]
     obligations: Vec<Obligation>,
     #[builder(field)]
     #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
-    #[serde(rename = "prohibition", alias = "odrl:prohibition", default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(
+        rename = "prohibition",
+        alias = "odrl:prohibition",
+        alias = "http://www.w3.org/ns/odrl/2/prohibition",
+        default
+    )]
     prohibitions: Vec<Prohibition>,
     #[builder(into)]
     #[serde(rename = "@id")]
@@ -101,15 +113,21 @@ pub struct Policy {
     #[serde(rename = "@type")]
     kind: PolicyKind,
     #[builder(into)]
-    #[serde(alias = "odrl:assignee")]
+    #[serde(
+        alias = "odrl:assignee",
+        alias = "http://www.w3.org/ns/odrl/2/assignee"
+    )]
     #[serde(skip_serializing_if = "Option::is_none")]
     assignee: Option<String>,
     #[builder(into)]
-    #[serde(alias = "odrl:assigner")]
+    #[serde(
+        alias = "odrl:assigner",
+        alias = "http://www.w3.org/ns/odrl/2/assigner"
+    )]
     #[serde(skip_serializing_if = "Option::is_none")]
     assigner: Option<String>,
     #[builder(into)]
-    #[serde(alias = "odrl:target")]
+    #[serde(alias = "odrl:target", alias = "http://www.w3.org/ns/odrl/2/target")]
     #[serde(skip_serializing_if = "Option::is_none")]
     target: Option<Target>,
 }
@@ -183,11 +201,14 @@ impl<S: policy_builder::State> PolicyBuilder<S> {
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone, Default)]
 pub enum PolicyKind {
     #[default]
-    #[serde(alias = "odrl:Set")]
+    #[serde(alias = "odrl:Set", alias = "http://www.w3.org/ns/odrl/2/Set")]
     Set,
-    #[serde(alias = "odrl:Offer")]
+    #[serde(alias = "odrl:Offer", alias = "http://www.w3.org/ns/odrl/2/Offer")]
     Offer,
-    #[serde(alias = "odrl:Agreement")]
+    #[serde(
+        alias = "odrl:Agreement",
+        alias = "http://www.w3.org/ns/odrl/2/Agreement"
+    )]
     Agreement,
 }
 
@@ -196,10 +217,15 @@ pub enum PolicyKind {
 pub struct Permission {
     #[builder(field)]
     #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
-    #[serde(rename = "constraint", alias = "odrl:constraint", default)]
+    #[serde(
+        rename = "constraint",
+        alias = "odrl:constraint",
+        alias = "http://www.w3.org/ns/odrl/2/constraint",
+        default
+    )]
     constraints: Vec<Constraint>,
     #[builder(default)]
-    #[serde(alias = "odrl:action")]
+    #[serde(alias = "odrl:action", alias = "http://www.w3.org/ns/odrl/2/action")]
     action: Action,
 }
 
@@ -398,11 +424,22 @@ impl LeftOperand {
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
 pub struct AtomicConstraint {
-    #[serde(rename = "leftOperand", alias = "odrl:leftOperand")]
+    #[serde(
+        rename = "leftOperand",
+        alias = "odrl:leftOperand",
+        alias = "http://www.w3.org/ns/odrl/2/leftOperand"
+    )]
     pub left_operand: LeftOperand,
-    #[serde(alias = "odrl:operator")]
+    #[serde(
+        alias = "odrl:operator",
+        alias = "http://www.w3.org/ns/odrl/2/operator"
+    )]
     pub operator: Operator,
-    #[serde(rename = "rightOperand", alias = "odrl:rightOperand")]
+    #[serde(
+        rename = "rightOperand",
+        alias = "odrl:rightOperand",
+        alias = "http://www.w3.org/ns/odrl/2/rightOperand"
+    )]
     pub right_operand: PropertyValue,
 }
 

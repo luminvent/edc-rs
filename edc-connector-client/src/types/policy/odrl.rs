@@ -118,4 +118,55 @@ mod tests {
             ))
         );
     }
+
+    #[test]
+    fn should_deserialize_odrl_absolute_path() {
+        let content = json!([
+          {
+            "@id": "cG9zdHMtZnJvbS1saTI=:bGkyLWFzc2V0LTE=:MjRmOTI3MjMtYzZlZS00NGNmLWI0ZWItYTgxYTg3NzJjNGE3",
+            "@type": "http://www.w3.org/ns/odrl/2/Offer",
+            "http://www.w3.org/ns/odrl/2/permission": [],
+            "http://www.w3.org/ns/odrl/2/prohibition": [],
+            "http://www.w3.org/ns/odrl/2/obligation": []
+          },
+          {
+            "@id": "dGFtaXMtbWVtYmVyLW9ubHk=:bGkyLWFzc2V0LTE=:OWUyZGE4NGYtMjYwZC00MzFiLWFiN2YtMGQ1YzY0ZTg2Nzcz",
+            "@type": "http://www.w3.org/ns/odrl/2/Offer",
+            "http://www.w3.org/ns/odrl/2/permission": {
+              "http://www.w3.org/ns/odrl/2/action": {
+                "@id": "http://www.w3.org/ns/odrl/2/use"
+              },
+              "http://www.w3.org/ns/odrl/2/constraint": {
+                "http://www.w3.org/ns/odrl/2/leftOperand": {
+                  "@id": "MembershipCredential"
+                },
+                "http://www.w3.org/ns/odrl/2/operator": {
+                  "@id": "http://www.w3.org/ns/odrl/2/eq"
+                },
+                "http://www.w3.org/ns/odrl/2/rightOperand": "active"
+              }
+            },
+            "http://www.w3.org/ns/odrl/2/prohibition": [],
+            "http://www.w3.org/ns/odrl/2/obligation": []
+          },
+          {
+            "@id": "cG9zdHMtZnJvbS1saTItdjI=:bGkyLWFzc2V0LTE=:OTNkMTMyNmMtZmE5Yy00ZGFlLTk0NTAtMWZiN2RmZTg3NjAz",
+            "@type": "http://www.w3.org/ns/odrl/2/Offer",
+            "http://www.w3.org/ns/odrl/2/permission": [],
+            "http://www.w3.org/ns/odrl/2/prohibition": [],
+            "http://www.w3.org/ns/odrl/2/obligation": []
+          },
+          {
+            "@id": "T2ZmZXIxMjM=:bGkyLWFzc2V0LTE=:MTA1ZTk0MjUtN2Y1ZC00N2I3LTlmNzAtNjcxNzJiYTlkMDZk",
+            "@type": "http://www.w3.org/ns/odrl/2/Offer",
+            "http://www.w3.org/ns/odrl/2/permission": [],
+            "http://www.w3.org/ns/odrl/2/prohibition": [],
+            "http://www.w3.org/ns/odrl/2/obligation": []
+          }
+        ]);
+
+        let policy = serde_json::from_value::<Vec<Policy>>(content).unwrap();
+        // println!("{:#?}", policy);
+        assert_eq!(policy.len(), 4);
+    }
 }
