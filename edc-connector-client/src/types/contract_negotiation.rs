@@ -54,6 +54,7 @@ pub struct ContractNegotiation {
     callback_addresses: Vec<CallbackAddress>,
     #[serde(rename = "type")]
     kind: ContractNegotiationKind,
+    error_detail: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -151,5 +152,9 @@ impl ContractNegotiation {
 
     pub fn protocol(&self) -> &str {
         &self.protocol
+    }
+
+    pub fn error_detail(&self) -> Option<&str> {
+        self.error_detail.as_deref()
     }
 }
