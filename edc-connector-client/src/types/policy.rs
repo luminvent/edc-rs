@@ -3,6 +3,7 @@ mod odrl;
 use bon::Builder;
 use serde::{Deserialize, Serialize};
 use serde_with::{formats::PreferMany, serde_as, OneOrMany};
+use std::collections::HashMap;
 
 use crate::ConversionError;
 
@@ -108,6 +109,25 @@ pub struct Policy {
     )]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     prohibitions: Vec<Prohibition>,
+    #[builder(field)]
+    #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
+    #[serde(
+        rename = "profile",
+        alias = "odrl:profile",
+        alias = "http://www.w3.org/ns/odrl/2/profile",
+        default
+    )]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    profiles: Vec<String>,
+    #[builder(field)]
+    #[serde(
+        rename = "extensibleProperties",
+        alias = "odrl:extensibleProperties",
+        alias = "http://www.w3.org/ns/odrl/2/extensibleProperties",
+        default
+    )]
+    #[serde(skip_serializing_if = "HashMap::is_empty")]
+    extensible_properties: HashMap<String, serde_json::Value>,
     #[builder(into)]
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -167,6 +187,14 @@ impl Policy {
     pub fn prohibitions(&self) -> &[Prohibition] {
         &self.prohibitions
     }
+
+    pub fn profiles(&self) -> &[String] {
+        &self.profiles
+    }
+
+    pub fn extensible_properties(&self) -> &HashMap<String, serde_json::Value> {
+        &self.extensible_properties
+    }
 }
 
 impl<S: policy_builder::State> PolicyBuilder<S> {
@@ -197,6 +225,19 @@ impl<S: policy_builder::State> PolicyBuilder<S> {
 
     pub fn obligation(mut self, obligation: Obligation) -> Self {
         self.obligations.push(obligation);
+        self
+    }
+
+    pub fn profiles(mut self, profiles: Vec<String>) -> Self {
+        self.profiles = profiles;
+        self
+    }
+
+    pub fn extensible_properties(
+        mut self,
+        extensible_properties: HashMap<String, serde_json::Value>,
+    ) -> Self {
+        self.extensible_properties = extensible_properties;
         self
     }
 }
