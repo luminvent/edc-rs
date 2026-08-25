@@ -121,9 +121,7 @@ pub struct Policy {
     profiles: Vec<String>,
     #[builder(field)]
     #[serde(
-        rename = "extensibleProperties",
-        alias = "odrl:extensibleProperties",
-        alias = "http://www.w3.org/ns/odrl/2/extensibleProperties",
+        flatten,
         default
     )]
     #[serde(skip_serializing_if = "HashMap::is_empty")]
