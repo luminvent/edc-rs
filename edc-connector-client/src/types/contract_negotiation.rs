@@ -54,6 +54,7 @@ pub struct ContractNegotiation {
     callback_addresses: Vec<CallbackAddress>,
     #[serde(rename = "type")]
     kind: ContractNegotiationKind,
+    #[serde(default)]
     error_detail: Option<String>,
 }
 
