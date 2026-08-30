@@ -1,3 +1,5 @@
+#[cfg(feature = "contract-negotiation-review")]
+use crate::types::policy::Policy;
 use crate::{
     client::EdcConnectorClientInternal,
     types::{
@@ -90,5 +92,33 @@ impl<'a> ContractNegotiationApi<'a> {
             )
             .await
             .map(|results| results.into_iter().map(|ctx| ctx.inner).collect())
+    }
+
+    #[cfg(feature = "contract-negotiation-review")]
+    pub async fn review(&self, id: &str) -> EdcResult<Policy> {
+        let url = self
+            .client
+            .path_for(self.version, &[CONTRACT_NEGOTIATIONS_PATH, id, "review"]);
+
+        self.client
+            .get::<WithContext<Policy>>(url)
+            .await
+            .map(|context| context.inner)
+    }
+
+    #[cfg(feature = "contract-negotiation-review")]
+    pub async fn approve(&self, id: &str) -> EdcResult<()> {
+        let url = self
+            .client
+            .path_for(self.version, &[CONTRACT_NEGOTIATIONS_PATH, id, "approve"]);
+
+        self.client
+            .post_no_response(
+                url,
+                &self
+                    .client
+                    .context_for(self.version, &serde_json::Value::Null),
+            )
+            .await
     }
 }

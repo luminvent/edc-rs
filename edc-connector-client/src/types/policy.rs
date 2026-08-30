@@ -120,10 +120,7 @@ pub struct Policy {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     profiles: Vec<String>,
     #[builder(field)]
-    #[serde(
-        flatten,
-        default
-    )]
+    #[serde(flatten, default)]
     #[serde(skip_serializing_if = "HashMap::is_empty")]
     extensible_properties: HashMap<String, serde_json::Value>,
     #[builder(into)]

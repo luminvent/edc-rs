@@ -117,7 +117,7 @@ impl TransferProcess {
     pub fn callback_addresses(&self) -> &[CallbackAddress] {
         &self.callback_addresses
     }
-    
+
     pub fn error_detail(&self) -> Option<&str> {
         self.error_detail.as_deref()
     }
