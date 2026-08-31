@@ -1,13 +1,11 @@
 mod odrl;
 
+use super::properties::{FromValue, Properties, PropertyValue, ToValue};
+use crate::ConversionError;
 use bon::Builder;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::{formats::PreferMany, serde_as, OneOrMany};
 use std::collections::HashMap;
-
-use crate::ConversionError;
-
-use super::properties::{FromValue, Properties, PropertyValue, ToValue};
 
 #[derive(Debug, Serialize, Deserialize, Clone, Builder)]
 #[serde(rename_all = "camelCase")]
@@ -85,9 +83,9 @@ pub struct Policy {
         rename = "permission",
         alias = "odrl:permission",
         alias = "http://www.w3.org/ns/odrl/2/permission",
+        skip_serializing_if = "Vec::is_empty",
         default
     )]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     permissions: Vec<Permission>,
     #[builder(field)]
     #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
@@ -95,37 +93,35 @@ pub struct Policy {
         rename = "obligation",
         alias = "odrl:obligation",
         alias = "http://www.w3.org/ns/odrl/2/obligation",
+        skip_serializing_if = "Vec::is_empty",
         default
     )]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     obligations: Vec<Obligation>,
-    #[builder(field)]
-    #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
-    #[serde(
-        rename = "prohibition",
-        alias = "odrl:prohibition",
-        alias = "http://www.w3.org/ns/odrl/2/prohibition",
-        default
-    )]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    prohibitions: Vec<Prohibition>,
     #[builder(field)]
     #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
     #[serde(
         rename = "profile",
         alias = "odrl:profile",
         alias = "http://www.w3.org/ns/odrl/2/profile",
+        skip_serializing_if = "Vec::is_empty",
         default
     )]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     profiles: Vec<String>,
     #[builder(field)]
-    #[serde(flatten, default)]
-    #[serde(skip_serializing_if = "HashMap::is_empty")]
+    #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
+    #[serde(
+        rename = "prohibition",
+        alias = "odrl:prohibition",
+        alias = "http://www.w3.org/ns/odrl/2/prohibition",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
+    prohibitions: Vec<Prohibition>,
+    #[builder(field)]
+    #[serde(skip_serializing_if = "HashMap::is_empty", flatten, default)]
     extensible_properties: HashMap<String, serde_json::Value>,
     #[builder(into)]
-    #[serde(rename = "@id")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none", rename = "@id")]
     id: Option<String>,
     #[builder(default)]
     #[serde(rename = "@type")]
@@ -133,20 +129,23 @@ pub struct Policy {
     #[builder(into)]
     #[serde(
         alias = "odrl:assignee",
-        alias = "http://www.w3.org/ns/odrl/2/assignee"
+        alias = "http://www.w3.org/ns/odrl/2/assignee",
+        skip_serializing_if = "Option::is_none"
     )]
-    #[serde(skip_serializing_if = "Option::is_none")]
     assignee: Option<String>,
     #[builder(into)]
     #[serde(
         alias = "odrl:assigner",
-        alias = "http://www.w3.org/ns/odrl/2/assigner"
+        alias = "http://www.w3.org/ns/odrl/2/assigner",
+        skip_serializing_if = "Option::is_none"
     )]
-    #[serde(skip_serializing_if = "Option::is_none")]
     assigner: Option<String>,
     #[builder(into)]
-    #[serde(alias = "odrl:target", alias = "http://www.w3.org/ns/odrl/2/target")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(
+        alias = "odrl:target",
+        alias = "http://www.w3.org/ns/odrl/2/target",
+        skip_serializing_if = "Option::is_none"
+    )]
     target: Option<Target>,
 }
 
@@ -255,13 +254,14 @@ pub enum PolicyKind {
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone, Builder)]
 pub struct Permission {
     #[builder(field)]
-    #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
     #[serde(
         rename = "constraint",
         alias = "odrl:constraint",
         alias = "http://www.w3.org/ns/odrl/2/constraint",
+        skip_serializing_if = "Vec::is_empty",
         default
     )]
+    #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
     constraints: Vec<Constraint>,
     #[builder(default)]
     #[serde(alias = "odrl:action", alias = "http://www.w3.org/ns/odrl/2/action")]
@@ -476,20 +476,45 @@ pub struct AtomicConstraint {
     #[serde(
         rename = "leftOperand",
         alias = "odrl:leftOperand",
-        alias = "http://www.w3.org/ns/odrl/2/leftOperand"
+        alias = "http://www.w3.org/ns/odrl/2/leftOperand",
+        deserialize_with = "deserialize_single"
     )]
     pub left_operand: LeftOperand,
     #[serde(
         alias = "odrl:operator",
-        alias = "http://www.w3.org/ns/odrl/2/operator"
+        alias = "http://www.w3.org/ns/odrl/2/operator",
+        deserialize_with = "deserialize_single"
     )]
     pub operator: Operator,
     #[serde(
         rename = "rightOperand",
         alias = "odrl:rightOperand",
-        alias = "http://www.w3.org/ns/odrl/2/rightOperand"
+        alias = "http://www.w3.org/ns/odrl/2/rightOperand",
+        deserialize_with = "deserialize_single"
     )]
     pub right_operand: PropertyValue,
+}
+
+fn deserialize_single<'de, D, T>(deserializer: D) -> Result<T, D::Error>
+where
+    D: Deserializer<'de>,
+    T: Deserialize<'de> + Clone,
+{
+    #[derive(Deserialize)]
+    #[serde(untagged)]
+    enum OneOrMany<T> {
+        One(T),
+        Many(Vec<T>),
+    }
+
+    match OneOrMany::<T>::deserialize(deserializer) {
+        Ok(OneOrMany::One(item)) => Ok(item),
+        Ok(OneOrMany::Many(items)) => items
+            .first()
+            .cloned()
+            .ok_or_else(|| serde::de::Error::custom("No valid item found")),
+        _ => Err(serde::de::Error::custom("No valid item found")),
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]
