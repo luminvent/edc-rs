@@ -3,7 +3,7 @@ mod odrl;
 use super::properties::{FromValue, Properties, PropertyValue, ToValue};
 use crate::ConversionError;
 use bon::Builder;
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserialize, Serialize};
 use serde_with::{formats::PreferMany, serde_as, OneOrMany};
 use std::collections::HashMap;
 
