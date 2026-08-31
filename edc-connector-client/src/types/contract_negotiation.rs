@@ -93,11 +93,14 @@ pub struct NegotiationState {
     state: ContractNegotiationState,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Builder)]
 #[serde(rename_all = "camelCase")]
 pub struct TerminateNegotiation {
     #[serde(rename = "@id")]
     pub(crate) id: String,
+    #[serde(rename = "@type")]
+    #[builder(default = "TerminateNegotiation".to_string())]
+    pub(crate) r#type: String,
     pub(crate) reason: String,
 }
 

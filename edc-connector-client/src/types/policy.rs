@@ -476,45 +476,20 @@ pub struct AtomicConstraint {
     #[serde(
         rename = "leftOperand",
         alias = "odrl:leftOperand",
-        alias = "http://www.w3.org/ns/odrl/2/leftOperand",
-        deserialize_with = "deserialize_single"
+        alias = "http://www.w3.org/ns/odrl/2/leftOperand"
     )]
     pub left_operand: LeftOperand,
     #[serde(
         alias = "odrl:operator",
-        alias = "http://www.w3.org/ns/odrl/2/operator",
-        deserialize_with = "deserialize_single"
+        alias = "http://www.w3.org/ns/odrl/2/operator"
     )]
     pub operator: Operator,
     #[serde(
         rename = "rightOperand",
         alias = "odrl:rightOperand",
-        alias = "http://www.w3.org/ns/odrl/2/rightOperand",
-        deserialize_with = "deserialize_single"
+        alias = "http://www.w3.org/ns/odrl/2/rightOperand"
     )]
     pub right_operand: PropertyValue,
-}
-
-fn deserialize_single<'de, D, T>(deserializer: D) -> Result<T, D::Error>
-where
-    D: Deserializer<'de>,
-    T: Deserialize<'de> + Clone,
-{
-    #[derive(Deserialize)]
-    #[serde(untagged)]
-    enum OneOrMany<T> {
-        One(T),
-        Many(Vec<T>),
-    }
-
-    match OneOrMany::<T>::deserialize(deserializer) {
-        Ok(OneOrMany::One(item)) => Ok(item),
-        Ok(OneOrMany::Many(items)) => items
-            .first()
-            .cloned()
-            .ok_or_else(|| serde::de::Error::custom("No valid item found")),
-        _ => Err(serde::de::Error::custom("No valid item found")),
-    }
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]

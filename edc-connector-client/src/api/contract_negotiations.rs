@@ -71,10 +71,9 @@ impl<'a> ContractNegotiationApi<'a> {
         let url = self
             .client
             .path_for(self.version, &[CONTRACT_NEGOTIATIONS_PATH, id, "terminate"]);
-        let request = TerminateNegotiation {
-            id: id.to_string(),
-            reason: reason.to_string(),
-        };
+
+        let request = TerminateNegotiation::builder().id(id.to_string()).reason(reason.to_string()).build();
+
         self.client
             .post_no_response(url, &self.client.context_for(self.version, &request))
             .await
