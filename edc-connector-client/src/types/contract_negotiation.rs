@@ -49,6 +49,7 @@ pub struct ContractNegotiation {
     counter_party_id: Option<String>,
     counter_party_address: String,
     protocol: String,
+    asset_id: Option<String>,
     created_at: i64,
     #[serde_as(deserialize_as = "OneOrMany<_, PreferMany>")]
     callback_addresses: Vec<CallbackAddress>,
@@ -156,6 +157,9 @@ impl ContractNegotiation {
 
     pub fn protocol(&self) -> &str {
         &self.protocol
+    }
+    pub fn asset_id(&self) -> &Option<String> {
+        &self.asset_id
     }
 
     pub fn error_detail(&self) -> Option<&str> {
