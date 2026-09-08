@@ -125,18 +125,23 @@ impl<'a> ContractNegotiationApi<'a> {
     }
 
     #[cfg(feature = "contract-negotiation-review")]
-    pub async fn review_terminate(&self, id: &str) -> EdcResult<()> {
+    pub async fn review_terminate(&self, id: &str, reason: &str) -> EdcResult<()> {
         let url = self.client.path_for(
             self.version,
             &[CONTRACT_NEGOTIATIONS_PATH, id, "review-terminate"],
         );
+
+        let request = TerminateNegotiation::builder()
+          .id(id.to_string())
+          .reason(reason.to_string())
+          .build();
 
         self.client
             .post_no_response(
                 url,
                 &self
                     .client
-                    .context_for(self.version, &serde_json::Value::Null),
+                    .context_for(self.version, &request),
             )
             .await
     }
